@@ -1,0 +1,72 @@
+1, Environment setup:
+    1.1, easy_install web.py
+    1.2, easy_install request.py
+
+2, How to deploy and start the webservice:
+
+    2.1, copy the all file (fib_restful.py, fib_restful_https with .crt/.key is for https webservice) to you folder
+    2.2, nohup python fib_restfult.py &
+    by default, 8080 port will be used, if you want to use customized one, you can execute it as example: python fib_restfult.py 8888 then port 8888 will be used
+
+    2.3 How to run the automation test:
+    python -m unittest Q1-unit-test
+    note: here the unit test or function test case is just target for http service.
+
+3, How to stop the webservice:
+    just find out   (ps -ef) the process ID and kill -9 process_id
+
+4, How to use the webservice for customer:
+    user can use browser to send the restful query url or using restful query tool or or just in CLI
+
+    4.1, http://x.x.x.x:8080/fib , it will list the usage
+    4.2, http://x.x.x.x:8080/n # n should be a integer and large than 0
+    The web service accepts a number, n, as input and returns the first n Fibonacci numbers, starting from 0. I.e. given n = 5, appropriate output would represent the sequence "0 1 1 2 3".
+
+
+5, Trouble-shooting step:
+    if the webservice not work as expect ot exception raise:
+    5.1, ps -ef | grep fib_restful , to check the process is up
+    5.2, netstat -an | grep 8080 , to check whether defined port is listening
+    5.3 check the firewall setting in case block the communicate
+    5.4 check any http proxy set variable set in the OS
+
+6, More function test case plan in further:
+
+    6.1, test query in different browser: IE, FF, chrome ...
+    6.2, test the program running on different OS: windows, Linux ...
+    6.3, test the system restart, the webservice will be auto start-up (write a cron job script to timely checking, if process not found, just to startup it, and also add it to system startup list)
+    6.4, test https/ssl for restful query, and the function user authentication enable
+
+7, more Enhance in code in future:
+
+    set the HA proxy in front of the back-end program for the function of HA and load-balance
+
+8, Performance test:
+
+    tool: Jmeter
+
+    8.1, test to the webservice respond time when only single user request with long integer: figure out the curve: respond time (Y axis) Vs Number value(X: 1, 10, 20, 40, 50, 100, 200, 300...1000, 2000, ...100000...)
+    8.2, test the system respond time cost when large of concurrent request, and figure out the curve:
+    8.2.1 value : [1, 10000], 10 request / 5 second, how about respond time
+    8.2.2 value : [1, n], 100 request / 5 second .....
+    the value range and the request speed should according the real user scenario
+
+9, And monitor system resource when above #8 testing :
+
+    Tool: open source tool for system resource monitoring, liking Nagios, CheckMK
+
+    9.1, monitor the CPU and memory cost for the web service when above performance test
+    9.2, monitor the IO if the webservice will persist data or log, to find out any bottleneck
+    9.3, monitor the disk consuming figure if the webservice will persist data or log, for the purpose of further disk resource plan and data purge setting
+
+
+10, Monitor system in Production:
+
+    10.1, monitor log if Error or exception raises, to real time notify whether system goes wrong
+    10.2, timing run some synthetic test in the production, the mail notify or other method will be sent/informed to admin in case the synthetic test fail, then admin can take action to trouble shooing and fix it
+    10.3, monitor process/port is up and /CPU/memory/disk performance in production, if pre-defined threshold reach (liking 90% CPU for this process occupied for some while), mail or other notify should be sent to admin to handle the case
+
+    tool:
+    logstash -> Nagios
+
+
