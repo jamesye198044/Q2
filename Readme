@@ -24,11 +24,11 @@
 
 
 5, Trouble-shooting step:
-    if the webservice not work as expect ot exception raise:
+    if the webservice not work as expect or exception raise:
     5.1, ps -ef | grep fib_restful , to check the process is up
     5.2, netstat -an | grep 8080 , to check whether defined port is listening
-    5.3 check the firewall setting in case block the communicate
-    5.4 check any http proxy set variable set in the OS
+    5.3 check the firewall setting in case block the communication
+    5.4 check any http proxy env variable setting in the OS
 
 6, More function test case plan in further:
 
