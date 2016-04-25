@@ -9,8 +9,8 @@
     by default, 8080 port will be used, if you want to use customized one, you can execute it as example: python fib_restfult.py 8888 then port 8888 will be used
 
     2.3 How to run the automation test:
-    python -m unittest Q1-unit-test
-    note: here the unit test or function test case is just target for http service.
+    python -m unittest Q2-unit-test
+    note: here the unit test or function test case is just target for http service. no for https.
 
 3, How to stop the webservice:
     just find out   (ps -ef) the process ID and kill -9 process_id
